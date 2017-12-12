@@ -1,0 +1,3 @@
+% ![Gopher](img/go_logo_100.png) Programmering i Go
+% 
+% ##DATEFIELD##

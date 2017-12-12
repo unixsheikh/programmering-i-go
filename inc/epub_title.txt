@@ -1,0 +1,3 @@
+% Programmering i Go
+% af BinarySanity
+%  

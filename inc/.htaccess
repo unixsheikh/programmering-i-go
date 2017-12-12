@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^golang\.dk$ [NC]
+RewriteRule ^(.*)$ http://www.golang.dk/$1 [R=301,L]
