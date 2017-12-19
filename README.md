@@ -21,7 +21,7 @@ Filnavnene skal være på engelsk selvom indholdet er på dansk.
 
 Hvis du ønsker det, kan du efterlade dit navn (hjemmeside eller andet relevant information) i _CREDITS.md_ filen.
 
-**Vigtigt:** Du skal ikke redigere i HTML filerne. De bliver automatisk genereret med `pandoc`.
+**Vigtigt:** Du skal ikke redigere i HTML filerne. De bliver automatisk genereret med [Pandoc](http://pandoc.org/).
 
 ### Fortæl om bogen ###
 
