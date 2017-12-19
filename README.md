@@ -8,13 +8,11 @@ Bogen er et "levende" dokument der vil fortsætte med at blive udviklet og opdat
  * Hver sektion er en Markdown fil.
  * Navigationen og strukturen er automatisk genereret via brug af en Makefil.
 
-Bogen findes også formatterne: [pdf](http://www.golang.dk/programmering_i_go.pdf) og [epub](http://www.golang.dk/programmering_i_go.epub)
-
 ## Sådan kan du bidrage ##
 
 Du kan hjælpe med at gøre denne bog til en af de bedste danske bøger om programmering i Go.
 
- * Klon og rediger.
+ * Klon og rediger eller opret nye Markdown filer.
  * Indsend en "pull request" til overvejelse.
 
 Tilføj sektioner til _sections_ mappen eller redigér eksisterende sektioner. Tilføj derefter nyoprettede sektioner til filen _sections.txt_, der hvor sektionen hører til. "Make" vil automatisk skanne _sections.txt_ og tilføje filen derefter.
@@ -23,6 +21,9 @@ Filnavnene skal være på engelsk selvom indholdet er på dansk.
 
 Hvis du ønsker det, kan du efterlade dit navn (hjemmeside eller andet relevant information) i _CREDITS.md_ filen.
 
+**Vigtigt:** Du skal ikke redigere i HTML filerne. De bliver automatisk genereret med `pandoc`.
+
 ### Fortæl om bogen ###
 
 Hjælp med at udbrede kendskabet til bogen ved at linke til hjemmesiden.
+

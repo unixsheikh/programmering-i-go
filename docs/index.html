@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="">
+  <title>Programmering i Go</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="css/html.css">
+  <meta name="description" content="Programmering i Go på dansk.">
+  <meta property="og:title" content="Programerring i Go">
+  <meta property="og:description" content="Programmering i Go på dansk.">
+  <meta property="og:image" content="http://www.golang.dk/img/go_logo_100.png">
+  <meta property="og:url" content="http://www.golang.dk/">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<header>
+    <div><a href="https://github.com/binarysanity/programmering-i-go"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a></div>
+<h1 class="title"><img src="img/go_logo_100.png" alt="Gopher"> Programmering i Go</h1>
+<h2 class="author"></h2>
+<h3 class="date"><span style='font-size:small;'>Oprettet: 2015-12-31. Sidst opdateret: 2017-12-19</span></h3>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#velkommen">Velkommen</a><ul>
+<li><a href="#sådan-kan-du-bidrage">Sådan kan du bidrage</a><ul>
+<li><a href="#fortæl-om-bogen">Fortæl om bogen</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#introduktion">Introduktion</a></li>
+<li><a href="#fakta-om-go">Fakta om Go</a><ul>
+<li><a href="#statisk-typet-sprog">Statisk typet sprog</a></li>
+</ul></li>
+<li><a href="#om-programmering-og-paradigmer">Om programmering og paradigmer</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#pakker">Pakker</a><ul>
+<li><a href="#mere-om-eksterne-pakker">Mere om eksterne pakker</a></li>
+</ul></li>
+<li><a href="#variabler">Variabler</a><ul>
+<li><a href="#pointer">Pointer</a></li>
+</ul></li>
+<li><a href="#konstanter">Konstanter</a></li>
+<li><a href="#structs">Structs</a></li>
+<li><a href="#specifikation">Specifikation</a><ul>
+<li><a href="#reserverede-nøgleord">Reserverede nøgleord</a></li>
+<li><a href="#pre-deklarerede-identifikatorer">Pre-deklarerede identifikatorer</a></li>
+</ul></li>
+<li><a href="#resourcer">Resourcer</a><ul>
+<li><a href="#officielle-links">Officielle links</a></li>
+<li><a href="#uofficielle-links">Uofficielle links</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="velkommen">Velkommen</h1>
+<p>“Programmering i Go” er en letlæselig og hurtig reference til programmeringssproget Go på dansk til hjemmesiden <a href="http://www.golang.dk/">golang.dk</a>.</p>
+<p>Bogen er et “levende” dokument der vil fortsætte med at blive udviklet og opdateret med mere brugbar information og eksempler efterhånden som det bliver muligt og tilgængeligt.</p>
+<ul>
+<li>Denne hjemmeside er et simpelt HTML5 projekt.</li>
+<li>Hver sektion er en Markdown fil.</li>
+<li>Navigationen og strukturen er automatisk genereret via brug af en Makefil.</li>
+</ul>
+<p>Bogen findes også formatterne: <a href="http://www.golang.dk/programmering_i_go.pdf">pdf</a> og <a href="http://www.golang.dk/programmering_i_go.epub">epub</a></p>
+<h2 id="sådan-kan-du-bidrage">Sådan kan du bidrage</h2>
+<p>Du kan hjælpe med at gøre denne bog til en af de bedste danske bøger om programmering i Go.</p>
+<ul>
+<li>Klon og rediger.</li>
+<li>Indsend en “pull request” til overvejelse.</li>
+</ul>
+<p>Tilføj sektioner til <em>sections</em> mappen eller redigér eksisterende sektioner. Tilføj derefter nyoprettede sektioner til filen <em>sections.txt</em>, der hvor sektionen hører til. “Make” vil automatisk skanne <em>sections.txt</em> og tilføje filen derefter.</p>
+<p>Filnavnene skal være på engelsk selvom indholdet er på dansk.</p>
+<p>Hvis du ønsker det, kan du efterlade dit navn (hjemmeside eller andet relevant information) i <em>CREDITS.md</em> filen.</p>
+<h3 id="fortæl-om-bogen">Fortæl om bogen</h3>
+<p>Hjælp med at udbrede kendskabet til bogen ved at linke til hjemmesiden.</p>
+<h1 id="introduktion">Introduktion</h1>
+<p>Programmeringssproget “Go”, også kaldet “Golang”, er et programmeringssprog der blev udviklet hos Google i 2007 af <a href="https://en.wikipedia.org/wiki/Robert_Griesemer">Robert Griesemer</a>, <a href="https://en.wikipedia.org/wiki/Rob_Pike">Rob Pike</a>, og <a href="https://en.wikipedia.org/wiki/Ken_Thompson">Ken Thompson</a>. I 2009 havde google allerede taget det i produktion, og det blev efterfølgende annonceret og udgivet som Open Source.</p>
+<p>Udviklingen af Go startede med at Robert Griesemer, Rob Pike og Ken Thompson den 21 september 2007 sad og drøftede nogle af de problemer de havde med bl.a. C++ og andre programmeringssprog samt den meget lange kompileringstid der fulgte med i disse sprog.</p>
+<p>De drøftede hvad de ville gøre anderledes hvis de skulle designe et nyt programmeringssprog, og en af dem tog nogle notater på en whiteboard. Efter et par dage fremstod der en klar idé og plan om hvordan det skulle gøres. Design af Go fortsatte på deltid og i parallel med andet ikke-relateret arbejde. I 2008 begyndte Ken Thompsom at arbejde på en kompiler som de kunne bruge til at undersøge ideerne. Kompileren udgav C kode. Midt på året havde projektet udviklet sig til et fuldtidsprojekt, og de var kommet så langt at de kunne forsøge sig på en produktionskompiler. I maj 2008 begyndte Ian Taylor, uafhængigt af projektet, at udvikle en Go frontend til GCC kompileren via det draft de havde lavet til Go specifikationen. Russ Cox sluttede sig til projektet i slutningen af 2008 og hjalp til med flytte sproget og bibliotekkerne fra prototype til virkelighed. Efterfølgende tilsluttede mange andre sig projektet og bidrog med både ideer og kode.</p>
+<p>Rob Pike fortæller:</p>
+<blockquote>
+<p>Programmeringssproget Go blev udviklet i slutningen af 2007 som et svar på nogle af de problemer vi som udviklere så i infrastrukturen hos Google. Computer landskabet i dag har stort set ingen relation til det miljø i hvilket de sprog der bruges mest, som C++, Java, og Python, blev skabt i. De problemer der er opstået ved introduktionen af fler-kerne processorer, netværkssystemer, massive computer klynger, samt web udviklingsmodellen, blev der arbejdet udenom fremfor at man løste dem. Derudover har størrelsesordnen ændret sig markant. Programmerne på serverne i dag består af millioner af linjer af kode, og de bliver arbejdet på af flere hundrede eller sågar flere tusinde programører, og de bliver opdateret bogstavlig talt hver dag. For at gøre sagen værre så er tiden det tager at bygge disse programmer, selv på store kompilationsklynger, vokset til mange minutter, ja selv flere timer. Go blev designet og udviklet til at håndterer disse miljø mere produktivt.</p>
+</blockquote>
+<p>Go blev altså født ud af en slags frustration over de nuværende programmeringssprog og miljøer. Programmering ansås for at være blevet for vanskeligt og valget af programmeringssprog bar på årsagen. Enten er man tvunget til at vælge effektiv kompilering og effektiv udførelse, eller også lettere udvikling, men meget langsommere implementering. Disse tre ting fandtes ikke i én kombination i nogle af de udbredte programmeringssprog.</p>
+<p>Go er et forsøg på at kombinere den lettelse man opnår ved at bruge et dynamisk og fortolket sprog med effektiviseringen af et kompileret sprog. Samtidig forsøger det at være moderne med understøttelse af flere kerne og bedre netværksunderstøttelse.</p>
+<p>Go er også designet til at være ultra hurtig til kompilering. Det må ikke tage mere end et par sekunder at bygge store eksekverbar filer på en enkelt computer. En del af dette er opnået ved at udvikle et meget simpelt, men samtidig meget udtrykfyldt sprog. Ligeledes automatisk hukommelseshåndtering, effektiv udførelse af programmer der kører samtidigt, effektiv håndtering af afhængigheder.</p>
+<p>Ingen af de nuværende sprog havde denne sammensætning, hvorfor de følte et stort behov for et nyt sprog.</p>
+<p>Ken Thompson var den der designede og implementerede det originale UNIX operativ system, og han var også opfinderen bag programmeringssproget B (den direkte forløber til programmeringssproget C). Han har også en af opfinderne til operativsystemet <a href="https://en.wikipedia.org/wiki/Plan_9_from_Bell_Labs">Plan 9</a> fra Bell Labs.</p>
+<p>Robert Pike er bedst kendt for hans arbejde hos Bell Labs, hvor han også var en af medlemmerne på UNIX holdet. Ligeledes var han også med til at designe og udvikle Plan 9 og operativsystemet Inferno. Han har også været med til at udvikle programmeringssproget Limbo.</p>
+<p>Pike er sammen med Brian Kernighan forfater til bogen <a href="https://en.wikipedia.org/wiki/The_Practice_of_Programming">The Practice of Programming</a> og <a href="https://en.wikipedia.org/wiki/The_Unix_Programming_Environment">The Unix Programming Environment</a>. Sammen med Ken Thompson er han også udvikleren af UTF-8.</p>
+<p>Robert Griesemer er en af udviklerne bag Google’s V8 JavaScript motor. Han har også udviklet på Chuppy, der er en distribueret låsemekanisme til Google’s GFS distribuerede filsystem og en masse andet.</p>
+<p>Programmeringssproget Go er således udviklet af nogle af verdens mest erfarne og dygtige mennesker.</p>
+<p>Det første jeg lagde mærke til da jeg besluttede mig for at tage et kig på Go var at den fuldstændig mangel på megen af den funktionalitet der normalt forbindes med et “moderne” programmeringssprog, og som flere sprog vedvarende bliver proppet med.</p>
+<p>Som et eksempel kan nævnes både C++ og PHP der i de senere år bliver ved med at vokse med mere og mere funktionalitet til f.eks. bedre understøttelse af det objekt orienterede paradigme.</p>
+<p>I kontrast til dette er Go nærmest blevet renset for alle disse ting og det er med god grund. Go er ikke alene udviklet hos Google til at gøre det som Google gør bedst, men det er samtidig udviklet af nogle af de gamle mestre i industrien.</p>
+<p>Det der gør programmeringssproget Go til en fantastisk designmæssig bedrift er netop det faktum at designerne havde nogle meget negative reaktioner til de programmeringssprog som de betragter som værende akademiske, teoretiske, eller uproduktive.</p>
+<p>Nogle mennesker mener at Go ignorerer alle de fundamentale fremskridt indenfor udvikling af programmeringssprog der er opnået indenfor de sidste 40 års. Det betragter Go som et sprog der er låst fast i 70’erne, og som er blevet designet til middelmådige programmører, men intet kunne være fjernere fra sandheden!</p>
+<p>Det udviklerne har gjort er ikke at ignorere de sidste 40 års udvikling indenfor programmeringssprog, derimod har de sorteret alt det overflødige og unødvendigt komplekse fra og smidt det i skraldespanden, og har i stedet valgt at fokuserer på at opnå meget af den samme funktionalitet, blot på en meget mere simpel og effektiv måde, og det mener jeg personligt at de har haft stor succes med.</p>
+<p>Hver eneste funktionalitet i Go er blevet udtænkt meget nøje, og dernæst implementeret på den mest effektive måde.</p>
+<p>I Go er der ikke noget rent objekt orienteret, ikke noget rent funktionelt, ingen klasser, ingen “inheritance” (hvor klasser arver fra andre klasser), og en masse andet funktionalitet eksisterer ikke.</p>
+<p>Men det betyder ikke at Go ikke understøtter objekt orienteret programmering eller funktionel programmering, det gør Go, det bliver bare implementeret på en anderledes og utrolig simpel måde.</p>
+<p>Resultatet af Go’s design er at man kan opnår meget af den samme funktionalitet kendt fra programmeringssprog som f.eks. Java og C++, men på nogle meget mere simple måder.</p>
+<p>Man kan sige at i Go er der meget mindre at holde øje med, men ikke mindre man kan opnå.</p>
+<p>Resultatet er nogle meget effektive programmer der er meget lettere at vedligeholde.</p>
+<p>Hvis du vil vide mere om udviklingen af Go kan artiklen <a href="https://talks.golang.org/2012/splash.article">Go at Google: Language Design in the Service of Software Engineering</a>, der er en forkortet tale som Rob Pike gav på en konference i Tucson, Arizona i 2012, anbefales. Ligeledes følgende videoer på YouTube:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=FTl0tl9BGdc" class="uri">https://www.youtube.com/watch?v=FTl0tl9BGdc</a></li>
+<li><a href="https://www.youtube.com/watch?v=rFejpH_tAHM" class="uri">https://www.youtube.com/watch?v=rFejpH_tAHM</a></li>
+<li><a href="https://www.youtube.com/watch?v=sln-gJaURzk" class="uri">https://www.youtube.com/watch?v=sln-gJaURzk</a></li>
+</ul>
+<h1 id="fakta-om-go">Fakta om Go</h1>
+<h2 id="statisk-typet-sprog">Statisk typet sprog</h2>
+<p>Go er et statisk typet programmeringssprog, hvilket vil sige at kompileren tjekker variablernes typer under kompilering. Dette betyder i praksis at du som programmør skal definere hvilken type værdi en given variabel skal indeholde, altså om det er f.eks. et tal eller en tekststreng. Det er ikke selve værdien der tjekkes, men derimod kun typen.</p>
+<p>Et statisk typet sprog har den store fordel at type fejl opdages før programmet køres. Hvis jeg f.eks. har defineret en variabel til at være en tekststreng, men er kommet til at indtaste et tal som dens værdi, så vil kompileren give mig en fejl ved kompilering da variablens indhold ikke passer til den type jeg oprindeligt definerede variablen med. Jeg bliver dermed forhindret i at kompilere programmet, og skal rette fejlen før jeg kan fortsætte.</p>
+<p>Dette er modsat et dynamisk typet programmeringssprog hvor der enten ikke eksisterer noget tjek af variabel typen, eller hvor dette tjek først sker under kørsel (dvs. run-time). Som programmør skal du ikke tænke på typer i et dynamisk typet programmeringssprog, og du kan blot give variablerne de værdier du ønsker. Dette gælder f.eks. programmeringssprog som PHP, Python, og Ruby.</p>
+<p>Da der ikke er noget tjek af variabel typen før evt. under kørsel, kan du risikerer at lede længe efter fejl fordi du er kommet til at give en variabel en forkert værdi. Hvis det dynamiske programmeringssprog samtidig tillader at du ændre variabel typen blot ved at ændre indholdet, som i f.eks. PHP eller Python, så bliver fejlen heller ikke opdaget under kørsel.</p>
+<p>Vi kan lave et lille program der demonstrerer dette fint i Go.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="co">// Først deklareres variablen til at være af typen &quot;string&quot;.</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="co">// Dette betyder at variablen skal indeholde en tekst streng.</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">var</span> foo <span class="dt">string</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="co">// Dernæst gives variablen en værdi der passer til typen.</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">    foo = <span class="st">&quot;Hello world!&quot;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="co">// Her deklareres variablen også til at være af typen &quot;string&quot;.</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="kw">var</span> bar <span class="dt">string</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="co">// Men da vi giver variablen et indhold af en anden type,</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">    <span class="co">// får vi en fejl af kompileren når vi forsøger at kompilere programmet.</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">    bar = <span class="dv">10</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">    fmt.Println(foo)</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">    fmt.Println(bar)</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">}</a></code></pre></div>
+<p>Go kompileren giver os følgende fejlbesked:</p>
+<pre><code>cannot use 10 (type int) as type string in assignment</code></pre>
+<p>I PHP og Python, der begge er dynamiske programmeringssprog, kan ovenstående fejl ikke opdages. Vi behøver ikke definere nogen type, og hvis vi ændre typen bliver dette ikke registreret som en fejl.</p>
+<p>Et dynamisk programmeringssprog giver derfor programmøren den frihed at han ikke skal bekymre sig om variabel typer, men tilgengæld er det meget lettere for programmøren at komme til at lave fejl i koden.</p>
+<p>Følgende program virker fint i Python:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Vi definerer variablen foo til at være af typen &quot;string&quot; ved</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># at give den en tekst streng som indhold.</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">foo <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="bu">print</span> foo</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># Her ændrer vi typen til int uden at dette er et problem.</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">foo <span class="op">=</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="bu">print</span> foo</a></code></pre></div>
+<p>Og her er det samme eksempel i PHP:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">&lt;?php</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">// Vi definerer variablen foo til at være af typen &quot;string&quot; ved</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">// at give den en tekst streng som indhold.</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">$foo</span> = <span class="st">&quot;Hello world&quot;</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">print</span> <span class="kw">$foo</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">// Her ændrer vi typen til int uden at dette er et problem.</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">$foo</span> = <span class="dv">10</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">print</span> <span class="kw">$foo</span><span class="ot">;</span></a></code></pre></div>
+<p>Statisk typet programmeringssprog er derfor mere sikre at programmere i, og det er typisk svære at lave den slags fejl i koden.</p>
+<h1 id="om-programmering-og-paradigmer">Om programmering og paradigmer</h1>
+<p><strong>UNDER UDVIKLING</strong></p>
+<h1 id="installation">Installation</h1>
+<p>Sådan installerer du Go..</p>
+<h1 id="pakker">Pakker</h1>
+<p>I Go bliver programmer organiseret i en mappestruktur kaldet for “arbejdsrum” (workspace). Et arbejdsrum er blot et bibliotek der indeholder en eller flere af dine Go applikationer. Et arbejdsrum indeholder tre undermapper i roden.</p>
+<p>Følgende er et eksempel på et arbejdsrum kaldet “GoArbejdsMappe” i din hjemmemappe.</p>
+<pre><code>GoArbejdsMappe/
+  bin/
+  pkg/
+  src/</code></pre>
+<ul>
+<li>bin<br>Indeholder dine eksekverbar filer efter at dine programmer er blevet kompilerede.</li>
+<li>pkg<br>Indeholder Go pakke objekter.</li>
+<li>src<br>Indeholder kildekoden opdelt i pakker. Du skriver dine Go programmer i denne mappe.</li>
+</ul>
+<p>Go programmer konstrueres ved at linke “pakker” sammen. En pakke kan være sammensat af en eller flere filer med kildekode der sammen deklarerer konstanter, variabler, typer og funktioner som hører sammen i pakken, og som alle er tilgængelige for filer i den samme pakke. Disse elementer kan så “eksporteres” så de også kan benyttes i andre pakker.</p>
+<p>I en og samme pakke kan der ikke eksistere to identiske deklarationer. Dvs. der kan f.eks. ikke eksistere to funktioner med samme navn i en og samme pakke.</p>
+<p>Pakker i Go minder om det der hedder “namespaces” i andre programmeringssprog.</p>
+<p>Før du kan udvikle et Go program skal du specificere et arbejdsrum. Dette gør du med GOPATH miljø variablen.</p>
+<pre><code>$ export GOPATH=/$HOME/GoArbejdsMappe</code></pre>
+<p>En god måde at organisere et Go program på er ved at bruge mappenavne som pakkenavne.</p>
+<pre><code>GoArbejdsMappe/
+  src/
+    foo/
+      bar/
+        a.go
+        b.go
+        c.go
+      main.go</code></pre>
+<p>I <em>GoArbejdsMappe</em> under <em>src</em> har vi en pakke kaldet <em>foo</em>. <em>foo</em> indeholder en <em>main.go</em>, der er selve hovedfilen som Go skal bruge. Derudover indeholder <em>foo</em> en lokal pakke kaldet <em>bar</em>.</p>
+<p>Et pakkenavn specificeres via nøgleordet <strong>package</strong>. <em>main.go</em> skal altid tilhøre <em>main</em> pakken, og det kan ikke laves om.</p>
+<p>Go’s standard bibliotek kommer med et hav af rigtigt gode pakker der alle kan bruges til at opbygge forskellige programmer. F.eks. indeholder pakken <em>database/sql</em> et interface til at arbejde med SQL databaser, mens pakken <em>net/http</em> giver HTTP klient og server implementeringer.</p>
+<p>Pakkerne der følger med i Go’s standard bibliotek kan ses på: <a href="https://golang.org/pkg/" class="uri">https://golang.org/pkg/</a></p>
+<p>Go har indbygget funktionalitet til effektiv benyttelse af eksterne pakker uanset om det drejer sig om pakker fra Go’s eget standard bibliotek, eller om det drejer sig om tredjeparts pakker på f.eks. Github.</p>
+<p>Pakker bliver importeret i Go med nøgleordet <strong>import</strong>.</p>
+<p>Hvis vi tager udgangspunkt i ovenstående eksempel ville filerne se sådan ud:</p>
+<p><em>a.go</em></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">func</span> Blip() {</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blip!&quot;</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">}</a></code></pre></div>
+<p>Pakken <a href="https://golang.org/pkg/fmt/">fmt</a> er en pakke i Go’s standard bibliotek der implementerer forskellige input og output funktioner som svarer lidt til C’s <em>printf</em> og <em>scanf</em>.</p>
+<p><em>b.go</em></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw">func</span> Blop() {</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blop!&quot;</span>)</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">}</a></code></pre></div>
+<p><em>c.go</em></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">func</span> Blup() {</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blup!&quot;</span>)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">}</a></code></pre></div>
+<p><em>main.go</em></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">import</span> (</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="st">&quot;foo/bar&quot;</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">    fmt.Println(<span class="st">&quot;Hej, jeg er main!&quot;</span>)</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">    bar.Blip()</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">    bar.Blop()</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">    bar.Blup()</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">}</a></code></pre></div>
+<p>Filerne <em>a.go</em>, <em>b.go</em> og <em>c.go</em> tilhører alle den samme lokale pakke fordi de ligger i den samme undermappe. Navnet på en pakke behøver ikke være det samme som navnet på et bibliotek, men det er praktisk at benytte det samme navn.</p>
+<p>I <em>main.go</em> bliver to forskellige pakker importeret. Først bliver pakken <em>fmt</em> fra Go’s standard bibliotek importeret. Dernæst bliver den lokale pakke <em>bar</em> importeret. Vi importerer den lokale pakke <em>bar</em> ved at bruge pakkenavnet <em>foo</em>. Dette gør vi fordi vi har sat vores GOPATH variabel til at pege på <code>$HOME/GoArbejdsMappe</code>, og Go importerer lokale pakker relativt i forhold til GOPATH.</p>
+<p>Hvis du prøver at oprette ovenstående filer kan du teste programmet ved at bruge kommandoen:</p>
+<pre><code>$ go run GoArbejdsMappe/src/foo/main.go
+Hej, jeg er main!
+Hej, jeg er Blip!
+Hej, jeg er Blop!
+Hej, jeg er Blup!</code></pre>
+<p><strong>Bemærk!</strong> <em>go run</em> virker <strong>kun</strong> med filer indeholdende Go kildekode, den virker ikke med mapper. <em>go install</em> derimod virker <strong>kun</strong> med mapper.</p>
+<p><em>go run</em> kompilerer filen og kører programmet, men den gemmer ikke det kompilerede program.</p>
+<p>Hvis du gerne vil oprette en eksekverbar fil af dit program, skal du benytte <em>go install</em>. Det er ligegyldigt i hvilken mappe du befinder dig, når du bruger kommandoen <em>go install</em>, du skal blot specificere navnet på den pakke du ønsker at installere.</p>
+<pre><code>$ cd $HOME
+$ go install foo</code></pre>
+<p>Din mappestruktur ser nu sådan ud:</p>
+<pre><code>$ tree
+.
+└── GoArbejdsMappe
+    ├── bin
+    │   └── foo
+    ├── pkg
+    │   └── linux_amd64
+    │       └── foo
+    │           └── bar.a
+    └── src
+        └── foo
+            ├── bar
+            │   ├── a.go
+            │   ├── b.go
+            │   └── c.go
+            └── main.go</code></pre>
+<p>Go har oprettet mapperne <em>bin</em> og <em>pkg</em>. Og den eksekverbare fil ligger i <em>bin</em>.</p>
+<pre><code>./GoArbejdsMappe/bin/foo
+Hej, jeg er main!
+Hej, jeg er Blip!
+Hej, jeg er Blop!
+Hej, jeg er Blup!</code></pre>
+<p>Bemærk at funktionerne <em>Blip</em>, <em>Blop</em> og <em>Blup</em> alle starter med et stort begyndelsesbogstav. Det er ikke tilfældigt, men Go’s måde at eksportere ting på.</p>
+<p>Når en deklaration af en variabel, en konstant, en funktion eller en struct starter med et stort begyndelsesbogstav, så bliver det der er blevet deklareret “synligt” for anden kode udenfor den pakke som deklarationen finder sted i. Man siger at den pågældende ting der blev deklareret er blevet “eksporteret”. Deklarationer der starter med et lille begyndelsesbogstav, bliver ikke eksporterede, og disse ting er kun synlige for kode der tilhører den samme pakke.</p>
+<p>Prøv f.eks. at lave <em>Blop</em> om til <em>blop</em> med et lille “b”. Hvis du gør det, vil du ikke længere kunne kalde funktionen inde fra <em>main.go</em>. Dette skyles at <em>blob</em> nu kun kan ses af kode fra samme pakke som den pakke <em>blob</em> tilhører, altså pakken “bar”. Da kode i <em>main.go</em> tilhører pakken “main”, kan den ikke se de funktioner der ikke er blevet eksporterede.</p>
+<pre><code>GoArbejdsMappe/src/foo/main.go:11: cannot refer to unexported name bar.blip
+GoArbejdsMappe/src/foo/main.go:11: undefined: bar.blip</code></pre>
+<p>Denne funktionalitet kaldes for “synlighed” eller “navnerum”, og i programmering af computere bruges synlighed typisk med henblik på at gruppere symboler og identifikatorer omkring en bestemt funktionalitet, og til at undgå navne kollisioner mellem flere identifikatorer, der deler det samme navn.</p>
+<p><em>main.go</em> kan ikke længere se funktionen <em>blip()</em>.</p>
+<p>Lad os prøve at lave filerne lidt om og så køre <em>go install foo</em> igen.</p>
+<p><em>a.go</em></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw">func</span> Blip() {</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blip!&quot;</span>)</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">// Funktionen baz() er privat, og den kan kun kaldes</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">// fra a.go eller fra andre filer i samme pakke, som</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">// f.eks. b.go eller c.go.</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="kw">func</span> baz() {</a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">    fmt.Println(<span class="st">&quot;Hej, jeg er private baz!&quot;</span>)</a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">}</a></code></pre></div>
+<p><em>b.go</em></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="kw">func</span> Blop() {</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blop!&quot;</span>)</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">    <span class="co">// Her kalder vi funktionen baz() fra a.go</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">    <span class="co">// Det kan vi fordi a.go og b.go er i samme pakke.</span></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">    baz()</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">}</a></code></pre></div>
+<p><em>c.go</em></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="kw">func</span> Blup() {</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blup!&quot;</span>)</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">}</a></code></pre></div>
+<p><em>main.go</em></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">import</span> (</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">    <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">    <span class="st">&quot;foo/bar&quot;</span></a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">    fmt.Println(<span class="st">&quot;Hej, jeg er main!&quot;</span>)</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb20-11" data-line-number="11">    bar.Blip()</a>
+<a class="sourceLine" id="cb20-12" data-line-number="12">    bar.Blop()</a>
+<a class="sourceLine" id="cb20-13" data-line-number="13">    bar.Blup()</a>
+<a class="sourceLine" id="cb20-14" data-line-number="14">}</a></code></pre></div>
+<pre><code>$ go install foo
+$ ./GoArbejdsMappe/bin/foo
+Hej, jeg er main!
+Hej, jeg er Blip!
+Hej, jeg er Blop!
+Hej, jeg er private baz!
+Hej, jeg er Blup!</code></pre>
+<p>Funktionen <em>baz()</em> og <em>Blop()</em> er i samme pakke, hvilket gør at <em>Blop()</em> kan se <em>baz()</em> selvom den er privat. Hvis vi forsøger at kalde <em>baz()</em> direkte indefra <em>main()</em> får vi en fejl idet <em>main()</em> ikke kan se <em>baz()</em> direkte. Men da <em>main()</em> kan se <em>Blop()</em>, fordi <em>Blop()</em> er blevet eksporteret via det store begyndelsesbogstav, og da <em>Blop()</em> kan se <em>baz()</em>, bliver <em>baz()</em> kaldt.</p>
+<p>Ovenstående kan godt virke lidt forvirrende, og det anbefales at du læser <a href="https://golang.org/doc/code.html">How to Write Go Code</a></p>
+<p>Derudover er det en god idé at eksperimentere lidt med ovenstående indtil du har fået overblik over hvordan det virker.</p>
+<p>De fleste mennesker føler en trang til at yde modstand imod måden tingene er sat op på i Go, og det er muligt at gøre tingenen på en anden måde, men målet med den faste opsætning i Go er at få Go udviklere til at arbejde struktureret ens, og når man kigger på hvordan tingene fungere i mange andre programmeringssprog, hvor netop disse ting er til konstant debat og diskussion, så har udviklerne bag Go lukket diskussionen og gennemført en ensartet og effektiv måde at arbejde på. Det fungerer rigtig godt, og kræver blot en lille smule tilvending i starten.</p>
+<h2 id="mere-om-eksterne-pakker">Mere om eksterne pakker</h2>
+<p><strong>UNDER UDVIKLING</strong></p>
+<h1 id="variabler">Variabler</h1>
+<p>En variabel er en pladsholder i computerens hukommelse til noget data. Denne data kan f.eks. være en tekststreng som ordet “hallo verden”, eller det kan f.eks. være et tal som tallet 100, men det kan også være andre ting. Hvorvidt en given værdig er tilladt eller ej fastlægges af variablens type. Variablens type fastsættes ved variablens deklaration.</p>
+<p>I Go erklæres en variabel med nøgleordet <code>var</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co">// Deklarer en variabel af navnet &quot;minTekst&quot;, og giv den typen &quot;string&quot;.</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">var</span> minTekst <span class="dt">string</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">// Deklarer en variabel af navnet &quot;mitTal&quot;, og den den typen &quot;int&quot;.</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="kw">var</span> mitTal <span class="dt">int</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">// Giv variablen &quot;minTekst&quot; værdien &quot;Hallo verden&quot;.</span></a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">minTekst = <span class="st">&quot;Hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">// Giv variablen &quot;mitTal&quot; værdien &quot;100&quot;.</span></a>
+<a class="sourceLine" id="cb22-11" data-line-number="11">mitTal = <span class="dv">100</span></a></code></pre></div>
+<p>Hvis en variable ikke gives en begyndelsesværdi, initialisere Go variablen til en “nul værdi” for den type man definerer.</p>
+<p>Nul værdierne er følgende:</p>
+<ul>
+<li>0 for tal typer.</li>
+<li>false for sandhedsværdier, også kaldet boolske værdier.</li>
+<li>En tom tekststreng for tekststrenge.</li>
+</ul>
+<p>Variabler kan også defineres med en begyndelsesværdi.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">var</span> minTekst <span class="dt">string</span> = <span class="st">&quot;hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">var</span> mitTal <span class="dt">int</span> = <span class="dv">100</span></a></code></pre></div>
+<p>Der findes også en forkortet form hvor Go selv finder ud af variablens type ud fra den værdi man giver den.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">var</span> minTekst = <span class="st">&quot;hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">var</span> mitTal = <span class="dv">100</span></a></code></pre></div>
+<p>Sidst, men ikke mindst kan man også erstatte nøgleordet <code>var</code> med semikolon foran lighedstegnet.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb25-1" data-line-number="1">minTekst := <span class="st">&quot;hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">mitTal := <span class="dv">100</span></a></code></pre></div>
+<p>Ovenstående forkortede udgave, hvor semikolen bruges i stedet for nøgleordet <code>var</code>, kan kun bruges inde i en funktion. Udenfor en funktion skal enhver variabeldeklaration begynde med nøgleordet <code>var</code>, og den forkortede form <code>:=</code> er ikke tilgængelig.</p>
+<p>Variablers data kan ændres sålænge værdier er af samme type.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co">// Begyndende værdi.</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw">var</span> mitTal = <span class="dv">100</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">// Ny værdi.</span></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">mitTal = <span class="dv">200</span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">// Duer ikke da mitTal er deklareret automatisk som en int.</span></a>
+<a class="sourceLine" id="cb26-8" data-line-number="8">mitTal = <span class="st">&quot;Hej verden&quot;</span></a></code></pre></div>
+<p>I det sidste tilfælde giver Go følgende fejlbesked:</p>
+<pre><code>cannot use &quot;Hej verden&quot; (type string) as type int in assignment</code></pre>
+<p>Det er også muligt at gruppere flere variabel deklarationer sammen. Go tillægger værdierne til variablerne i den rækkefølge de står.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">var</span> a, b, c <span class="dt">int</span> = <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">// Eller med den forkortede udgave.</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">a, b, c := <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span></a></code></pre></div>
+<p>Med den forkortede udgave kan man sågar blande typerne.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb29-1" data-line-number="1">a, b, c := <span class="dv">10</span>, <span class="st">&quot;Hallo&quot;</span>, <span class="ot">false</span></a></code></pre></div>
+<p>Variablen <code>a</code> bliver deklareret til typen <code>int</code>, og får begyndelsesværdien 10. Variablen <code>b</code> bliver deklareret til typen <code>string</code>, og får begyndelsesværdien “Hallo”. Og variablen c bliver deklareret til typen <code>bool</code>, og får værdien “false”.</p>
+<h2 id="pointer">Pointer</h2>
+<p>En “pointer” i Go er en særlig variabel der indeholder en hukommelsesadresse på en anden almindelig variabel. Ligesom en almindelig variabel har en type, så har en pointer variabel også en type. Pointer variablens type fastsættes af den variablen type som pointeren “peger” på.</p>
+<p>Hvis jeg opretter en variablen af typen “string” med værdien “Hej verden”, så ligger denne værdi et sted i computerens hukommelse. Hvis jeg skal “pege” på denne hukommelsesadresse med en pointer variabel, så skal jeg bruge en pointer af typen “string”.</p>
+<p>Sagt med andre ord: En pointers type skal passe sammen med typen af det som den peger på.</p>
+<p>Lad os kigge på et konkret eksempel. Opret filen <em>main.go</em> og indtast følgende:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7">    <span class="co">// Først deklarer vi variablen &quot;a&quot; af typen &quot;string&quot;, og giver den værdien &quot;Hej&quot;.</span></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8">    <span class="kw">var</span> a <span class="dt">string</span> = <span class="st">&quot;Hej&quot;</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb30-10" data-line-number="10">    <span class="co">// Dernæst deklarer vi variablen &quot;b&quot; af typen &quot;string pointer&quot;.</span></a>
+<a class="sourceLine" id="cb30-11" data-line-number="11">    <span class="co">// Vi bruger * til at indikere at denne variablen er en &quot;pointer&quot;.</span></a>
+<a class="sourceLine" id="cb30-12" data-line-number="12">    <span class="kw">var</span> b *<span class="dt">string</span></a>
+<a class="sourceLine" id="cb30-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb30-14" data-line-number="14">    <span class="co">// Her giver vi variablen &quot;b&quot; hukommelsesadressen på variablen &quot;a&quot;.</span></a>
+<a class="sourceLine" id="cb30-15" data-line-number="15">    <span class="co">// Vi bruger &amp; til at indikerer at det er hukommelsesadressen vi ønsker,</span></a>
+<a class="sourceLine" id="cb30-16" data-line-number="16">    <span class="co">// og ikke selve indholdet af &quot;a&quot;.</span></a>
+<a class="sourceLine" id="cb30-17" data-line-number="17">    b = &amp;a</a>
+<a class="sourceLine" id="cb30-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb30-19" data-line-number="19">    <span class="co">// Udskriv værdien der ligger i variablen &quot;a&quot;.</span></a>
+<a class="sourceLine" id="cb30-20" data-line-number="20">    fmt.Println(a)</a>
+<a class="sourceLine" id="cb30-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb30-22" data-line-number="22">    <span class="co">// Udskriv værdien der ligger i variablen &quot;b&quot;.</span></a>
+<a class="sourceLine" id="cb30-23" data-line-number="23">    fmt.Println(b)</a>
+<a class="sourceLine" id="cb30-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb30-25" data-line-number="25">    <span class="co">// Udskriv værdien af det som &quot;b&quot; peger på.</span></a>
+<a class="sourceLine" id="cb30-26" data-line-number="26">    fmt.Println(*b)</a>
+<a class="sourceLine" id="cb30-27" data-line-number="27">}</a></code></pre></div>
+<p>Hvis du kører ovenstående kode vil du se noget tilsvarende det her:</p>
+<pre><code>$ go run main.go
+Hej
+0xc8200721b0
+Hej</code></pre>
+<p>Værdien <code>0xc8200721b0</code> er adressen på variablen <code>a</code> på min computer, den vil højst sandsynligt se anderledes på din.</p>
+<p>Tegnet * betyder at en variabel bliver deklareret som en pointer, en variabel der peger på noget, og man kan rent praktisk tænke sig at “stjernen” er det man peger med.</p>
+<p>Forskellen på <code>fmt.Println(b)</code> og <code>fmt.Println(*b)</code> er at vi i første tilfælde udskriver værdien af selve variablen <code>b</code>, hvilket er hukommelsesadressen på variablen <code>a</code>. I et andet tilfælde vil vi ikke se selve hukommelsesadressen, men derimod vil vi gerne se hvad der egentligt gemmer sig på denne hukommelsesadresse, hvilket er værdien “Hej” som variablen <code>a</code> indholder.</p>
+<p>Tegnet &amp; bruges til at få hukommelsesadresser, og vi kan lave et lille program der viser dette isoleret fra emnet om pointere.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb32-7" data-line-number="7">    <span class="kw">var</span> foo <span class="dt">string</span> = <span class="st">&quot;Hej med dig&quot;</span></a>
+<a class="sourceLine" id="cb32-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb32-9" data-line-number="9">    <span class="co">// Udskriv værdien som foo indeholder.</span></a>
+<a class="sourceLine" id="cb32-10" data-line-number="10">    fmt.Println(foo)</a>
+<a class="sourceLine" id="cb32-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb32-12" data-line-number="12">    <span class="co">// Udskriv den hukommelsesadresse på foo.</span></a>
+<a class="sourceLine" id="cb32-13" data-line-number="13">    fmt.Println(&amp;foo)</a>
+<a class="sourceLine" id="cb32-14" data-line-number="14">}</a></code></pre></div>
+<p>Hvis du kører ovenstående program får du noget tilsvarende dette resultat:</p>
+<pre><code>Hej med dig
+0xc82000a320</code></pre>
+<p>Lad os lave et andet konkret eksempel.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb34-7" data-line-number="7">    <span class="kw">var</span> a <span class="dt">string</span> = <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb34-9" data-line-number="9">    <span class="kw">var</span> b *<span class="dt">string</span> = &amp;a</a>
+<a class="sourceLine" id="cb34-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb34-11" data-line-number="11">    fmt.Println(a)</a>
+<a class="sourceLine" id="cb34-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb34-13" data-line-number="13">    *b = <span class="st">&quot;bar&quot;</span></a>
+<a class="sourceLine" id="cb34-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb34-15" data-line-number="15">    fmt.Println(a)</a>
+<a class="sourceLine" id="cb34-16" data-line-number="16">}</a></code></pre></div>
+<p>Hvad tror du der sker, hvis du prøver at køre ovenstående program?</p>
+<pre><code>$ go run main.go
+foo
+bar</code></pre>
+<p>Efter som <code>*b</code> peger på hukommelsesadressen til variablen <code>a</code>, kan vi ændre på indholdet på selve adressen, og det gør vi med:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb36-1" data-line-number="1">*b = <span class="st">&quot;bar&quot;</span></a></code></pre></div>
+<p>I ovenstående er det ikke variablen <code>b</code> der bliver ændret, men derimod det indhold som den peger på i hukommelsen, hvilket er indholdet af variablen <code>a</code>.</p>
+<p>Man kunne undre sig over hvad formålet med pointere er, og hvis man kommer fra en Python, Ruby eller PHP baggrund, så giver de meget lidt mening. Men der findes specifikke situationer hvor en pointer kan være et meget nyttigt redskab.</p>
+<p>Go blev oprindeligt designet til systemprogrammering og til at være et alternativ til C++. Dette betyder at Go blev udstyret med pointere sådan at man har mulighed for at “pille” direkte i data via brug af specifikke hukommelsesadresser. Pointere kan også bruges til at få programmer til at køre hurtigere idet man får direkte kontrol over hvor og hvordan data gemmes i hukommelsen. Selvom det er mikroskopiske forskelle, så er der forskel på hastigheden på udlæsning af en lang tekst streng der ligger spredt rundt omkring i hukommelsen, og så på en tekststreng der ligger samme sted, punkt efter punkt. Dette betyder samtidig også at hukommelsen bliver mindre fragmenteret.</p>
+<p>Det er dog kun til systemprogrammering og programmering til <a href="https://da.wikipedia.org/wiki/Indlejret_system">indlejrede systemer</a> at man har brug for den slags kontrol.</p>
+<p>Grundlæggende set skal du ikke bruge pointere fremfor almindelige variabler. Pointere skal du kun bruge hvor du ikke kan bruge noget som helst andet, eller hvor du reelt har brug for at manipulere med indholdet på specifikke hukommelsesadresser.</p>
+<p>Når man kender til globale variabler, kan man forledes til at tænke at en pointer og en global variabel lidt er det samme, men det er ikke korrekt. En global variabel er en variabel der kan tilgås alle steder fra. En pointer er en variabel der indeholder en hukommelsesadresse til hvor noget i hukommelsen bor.</p>
+<h1 id="konstanter">Konstanter</h1>
+<p>En konstant minder om en variabel, det er også en pladsholder i computerens hukommelse til noget data. Forskellen imellem en variabel og en konstant ligger i at en konstant ikke kan få ændret sit indhold, når den først er erklæret.</p>
+<p>I Go erklæres en konstant med nøgleordet <code>const</code></p>
+<p>I Go (og mange andre programmeringssprog) er det god kutyme at gøre brug af store bogstaver, når man definerer konstanter. På den måde er de lette at få øje på i koden, og de er dermed også lette at skelne fra variabler.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">const</span> MINTEKST <span class="dt">string</span> = <span class="st">&quot;Dette er en konstant&quot;</span></a></code></pre></div>
+<p>Hvis du forsøger at ændre værdien af en konstant der allerede er sat, får du en fejl.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">const</span> MITTAL <span class="dt">int</span> = <span class="dv">100</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="co">// Dette virker ikke!</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">MITTAL = <span class="dv">200</span></a></code></pre></div>
+<p>Når man forsøger at ændre indholdet af en konstant giver Go følgende fejlbesked:</p>
+<pre><code>cannot assign to MITTAL</code></pre>
+<p>Hvilket blot betyder, at Go ikke er i stand til at ændre værdien af konstanten <code>MITTAL</code> da den allerede er sat.</p>
+<h1 id="structs">Structs</h1>
+<p>Structs i Go er en type samling af felter. De er brugbare til at gruppere data sammen.</p>
+<p>Lad os se på et simpelt eksempel:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="co">// Vi opretter en struct af type &quot;person&quot;, og giver den felterne &quot;navn&quot; og &quot;alder&quot;.</span></a>
+<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="kw">type</span> Person <span class="kw">struct</span> {</a>
+<a class="sourceLine" id="cb40-7" data-line-number="7">    navn <span class="dt">string</span></a>
+<a class="sourceLine" id="cb40-8" data-line-number="8">    alder <span class="dt">int</span></a>
+<a class="sourceLine" id="cb40-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb40-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb40-11" data-line-number="11"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb40-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb40-13" data-line-number="13">    <span class="co">// Med denne syntaks opretter vi en ny struct.</span></a>
+<a class="sourceLine" id="cb40-14" data-line-number="14">    fmt.Println(Person{<span class="st">&quot;Brian&quot;</span>, <span class="dv">20</span>})</a>
+<a class="sourceLine" id="cb40-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb40-16" data-line-number="16">    <span class="co">// Du kan også oprette en struct ved at navngive felterne.</span></a>
+<a class="sourceLine" id="cb40-17" data-line-number="17">    fmt.Println(Person{navn: <span class="st">&quot;Karina&quot;</span>, alder: <span class="dv">30</span>})</a>
+<a class="sourceLine" id="cb40-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb40-19" data-line-number="19">    <span class="co">// Hvis du udelader et felt får den sin naturlige nul værdi.</span></a>
+<a class="sourceLine" id="cb40-20" data-line-number="20">    fmt.Println(Person{name: <span class="st">&quot;Martin&quot;</span>})</a>
+<a class="sourceLine" id="cb40-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb40-22" data-line-number="22">    <span class="co">// Du tilgår en struck&#39;s felter med et punktum.</span></a>
+<a class="sourceLine" id="cb40-23" data-line-number="23">    s := Person{navn: <span class="st">&quot;Jonas&quot;</span>, age: <span class="dv">50</span>}</a>
+<a class="sourceLine" id="cb40-24" data-line-number="24">    fmt.Println(s.name)</a>
+<a class="sourceLine" id="cb40-25" data-line-number="25">}</a></code></pre></div>
+<h1 id="specifikation">Specifikation</h1>
+<h2 id="reserverede-nøgleord">Reserverede nøgleord</h2>
+<p>De følgende nøgleord er reserverede, og kan derfor ikke bruges til identifikation.</p>
+<pre><code>break        default      func         interface    select
+case         defer        go           map          struct
+chan         else         goto         package      switch
+const        fallthrough  if           range        type
+continue     for          import       return       var</code></pre>
+<h2 id="pre-deklarerede-identifikatorer">Pre-deklarerede identifikatorer</h2>
+<pre><code>Types:
+    bool byte complex64 complex128 error float32 float64
+    int int8 int16 int32 int64 rune string
+    uint uint8 uint16 uint32 uint64 uintptr
+
+Constants:
+    true false iota
+
+Zero value:
+    nil
+
+Functions:
+    append cap close complex copy delete imag len
+    make new panic print println real recover</code></pre>
+<h1 id="resourcer">Resourcer</h1>
+<h2 id="officielle-links">Officielle links</h2>
+<p><a href="https://golang.org/">Den officielle hjemmeside</a><br> <a href="https://golang.org/doc/">Dokumentation</a><br> <a href="https://golang.org/ref/spec">Specifikationen</a><br> <a href="https://github.com/golang/go/wiki">Wiki</a><br> <a href="https://golang.org/doc/faq">FAQ</a><br> <a href="https://golang.org/blog/">Blog</a><br> <a href="https://twitter.com/golang">Twitter</a><br> <a href="https://gophers.slack.com/">Slack</a><br> <a href="https://tour.golang.org/welcome/1">Go tour - tutorial</a><br> <a href="https://groups.google.com/forum/#!forum/golang-nuts">Forum</a></p>
+<h2 id="uofficielle-links">Uofficielle links</h2>
+<p><a href="https://gopheracademy.com/">Gopheracademy</a></p>
+<p>Gopher Academy er en organisation der er oprettet af Go entusiaster for at udsprede programmeringssproget Go igennem undervisning, samfundsbegivenheder, o.a.</p>
+<p><a href="http://dave.cheney.net">Dave Cheney</a></p>
+<p>Dave er en af dem der organiserer <a href="https://gophercon.com/">gophercon</a>, og han er meget involveret i Go samfundet.</p>
+<p><a href="https://medium.com/@benbjohnson">Ben Johnson</a></p>
+<p>Ben har nogle gode artikler om standard biblioteket, strukturering af Go kode, og meget mere.</p>
+<p><a href="http://golangweekly.com/">Golang Weekly</a></p>
+<p>Et nyhedsbrev der hver uge har nogle gode artikler. Du kan finde gamle artikler her: <a href="http://golangweekly.com/issues">Issues</a></p>
+<p><a href="https://www.goinggo.net/">William Kennedy</a></p>
+<p>William Kennedy’s (forfatter af Go in Action) blog.</p>
+<p><a href="https://forum.golangbridge.org/">GoBridge</a></p>
+<p>Et Go forum drevet af GoBridge - en interesse organisation hvis mission er at udsprede brugen af Go som et redskab til at lære og undervise programmering, og i sidste ende til at styrke underrepræsenterede grupper i teknologi for at øge mangfoldigheden i Go samfundet.</p>
+<p><a href="https://reddit.com/r/golang">Golang Reddit</a></p>
+<p>Go på Reddit.</p>
+<p><a href="https://gophercon.com/">Gophercon</a></p>
+<p>GopherCon er verdens største Go begivenhed dedikeret programmeringssproget Go.</p>
+<p><a href="https://www.meetup.com/Go-Cph/">Go CPH</a></p>
+<p>Meetup gruppe for folk interesseret i Go i København og omegn.</p>
+<hr>
+<div style="text-align:center;">
+<h3>Oprettet og vedligeholdt af</h3>
+    <p><a href="https://github.com/binarysanity/" target="_blank">BinarySanity</a></p>
+    <p><a href="https://github.com/binarysanity/programmering-i-go/graphs/contributors" target="_blank">Projektdeltagere</a></p>
+<div class="license">
+    <a class="cc-badge" rel="license" href="https://github.com/binarysanity/programmering-i-go/blob/master/LICENSE"></a>
+    <span>Programmering i Go</span> af <a xmlns:cc="https://github.com/binarysanity/programmering-i-go/blob/master/LICENSE" href="https://github.com/binarysanity/" property="cc:attributionName" rel="cc:attributionURL">BinarySanity</a> er udgivet under licens:<br> <a rel="license" href="https://github.com/binarysanity/programmering-i-go/blob/master/LICENSE">The MIT License</a>.
+</div>
+</div>
+</body>
+</html>
