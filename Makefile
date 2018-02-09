@@ -6,8 +6,6 @@ CREATED_STR = Oprettet:
 LAST_UPDATED_STR = Sidst opdateret:
 BOOK_FILENAME = docs/programmering_i_go
 
-all: html pdf epub
-
 html:
 	cp inc/css/* docs/css/
 	cp img/* docs/img/
