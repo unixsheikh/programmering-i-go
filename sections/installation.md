@@ -20,7 +20,7 @@ TBD.
 
 ## Linux
 Go er generelt godt understøttet i diverse Linux-distributioners pakkesystemer.
-De primære er dækket her.
+De primære distributioner er dækket her.
 
 ## Før installation
 TBD.
@@ -35,15 +35,20 @@ sudo apt-get install -y golang
 ```
 
 ## Arch
-TBD.
+Installer Go i Arch Linux således,
+
+```# pacman -S go
+```
 
 ## Fedora
+Installer Go i Fedora således,
 
 ```
 sudo dnf install golang
 ```
 
 Dette vil installere Go og dets afhængigheder.
+
 
 ## Efter installation
 Start en ny shell og bekræft følgende,
