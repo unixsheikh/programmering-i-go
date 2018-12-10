@@ -10,7 +10,7 @@
   <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -23,13 +23,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -85,7 +83,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
     <div><a href="https://github.com/unixsheikh/programmering-i-go"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a></div>
 <h1 class="title"><img src="img/go_logo_100.png" alt="Gopher"> Programmering i Go</h1>
 <h2 class="author"></h2>
-<h3 class="date"><span style='font-size:small;'>Oprettet: 2015-12-31. Sidst opdateret: 2018-03-15</span></h3>
+<h3 class="date"><span style='font-size:small;'>Oprettet: 2015-12-31. Sidst opdateret: 2018-12-10</span></h3>
 </header>
 <nav id="TOC">
 <ul>
@@ -179,9 +177,9 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <p>Resultatet er nogle meget effektive programmer der er meget lettere at vedligeholde.</p>
 <p>Hvis du vil vide mere om udviklingen af Go kan artiklen <a href="https://talks.golang.org/2012/splash.article">Go at Google: Language Design in the Service of Software Engineering</a>, der er en forkortet tale som Rob Pike gav på en konference i Tucson, Arizona i 2012, anbefales. Ligeledes følgende videoer på YouTube:</p>
 <ul>
-<li><a href="https://www.youtube.com/watch?v=FTl0tl9BGdc" class="uri">https://www.youtube.com/watch?v=FTl0tl9BGdc</a></li>
-<li><a href="https://www.youtube.com/watch?v=rFejpH_tAHM" class="uri">https://www.youtube.com/watch?v=rFejpH_tAHM</a></li>
-<li><a href="https://www.youtube.com/watch?v=sln-gJaURzk" class="uri">https://www.youtube.com/watch?v=sln-gJaURzk</a></li>
+<li><a href="https://www.youtube.com/watch?v=FTl0tl9BGdc">https://www.youtube.com/watch?v=FTl0tl9BGdc</a></li>
+<li><a href="https://www.youtube.com/watch?v=rFejpH_tAHM">https://www.youtube.com/watch?v=rFejpH_tAHM</a></li>
+<li><a href="https://www.youtube.com/watch?v=sln-gJaURzk">https://www.youtube.com/watch?v=sln-gJaURzk</a></li>
 </ul>
 <h1 id="fakta-om-go">Fakta om Go</h1>
 <h2 id="statisk-typet-sprog">Statisk typet sprog</h2>
@@ -190,50 +188,50 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <p>Dette er modsat et dynamisk typet programmeringssprog hvor der enten ikke eksisterer noget tjek af variabel typen, eller hvor dette tjek først sker under kørsel (dvs. run-time). Som programmør skal du ikke tænke på typer i et dynamisk typet programmeringssprog, og du kan blot give variablerne de værdier du ønsker. Dette gælder f.eks. programmeringssprog som PHP, Python, og Ruby.</p>
 <p>Da der ikke er noget tjek af variabel typen før evt. under kørsel, kan du risikerer at lede længe efter fejl fordi du er kommet til at give en variabel en forkert værdi. Hvis det dynamiske programmeringssprog samtidig tillader at du ændre variabel typen blot ved at ændre indholdet, som i f.eks. PHP eller Python, så bliver fejlen heller ikke opdaget under kørsel.</p>
 <p>Vi kan lave et lille program der demonstrerer dette fint i Go.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="co">// Først deklareres variablen til at være af typen &quot;string&quot;.</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="co">// Dette betyder at variablen skal indeholde en tekst streng.</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">var</span> foo <span class="dt">string</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="co">// Dernæst gives variablen en værdi der passer til typen.</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    foo = <span class="st">&quot;Hello world!&quot;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="co">// Her deklareres variablen også til at være af typen &quot;string&quot;.</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="kw">var</span> bar <span class="dt">string</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="co">// Men da vi giver variablen et indhold af en anden type,</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">    <span class="co">// får vi en fejl af kompileren når vi forsøger at kompilere programmet.</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">    bar = <span class="dv">10</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">    fmt.Println(foo)</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">    fmt.Println(bar)</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">    <span class="co">// Først deklareres variablen til at være af typen &quot;string&quot;.</span></a>
+<a class="sourceLine" id="cb1-8" title="8">    <span class="co">// Dette betyder at variablen skal indeholde en tekst streng.</span></a>
+<a class="sourceLine" id="cb1-9" title="9">    <span class="kw">var</span> foo <span class="dt">string</span></a>
+<a class="sourceLine" id="cb1-10" title="10">    <span class="co">// Dernæst gives variablen en værdi der passer til typen.</span></a>
+<a class="sourceLine" id="cb1-11" title="11">    foo = <span class="st">&quot;Hello world!&quot;</span></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13">    <span class="co">// Her deklareres variablen også til at være af typen &quot;string&quot;.</span></a>
+<a class="sourceLine" id="cb1-14" title="14">    <span class="kw">var</span> bar <span class="dt">string</span></a>
+<a class="sourceLine" id="cb1-15" title="15">    <span class="co">// Men da vi giver variablen et indhold af en anden type,</span></a>
+<a class="sourceLine" id="cb1-16" title="16">    <span class="co">// får vi en fejl af kompileren når vi forsøger at kompilere programmet.</span></a>
+<a class="sourceLine" id="cb1-17" title="17">    bar = <span class="dv">10</span></a>
+<a class="sourceLine" id="cb1-18" title="18"></a>
+<a class="sourceLine" id="cb1-19" title="19">    fmt.Println(foo)</a>
+<a class="sourceLine" id="cb1-20" title="20">    fmt.Println(bar)</a>
+<a class="sourceLine" id="cb1-21" title="21">}</a></code></pre></div>
 <p>Go kompileren giver os følgende fejlbesked:</p>
 <pre><code>cannot use 10 (type int) as type string in assignment</code></pre>
 <p>I PHP og Python, der begge er dynamiske programmeringssprog, kan ovenstående fejl ikke opdages. Vi behøver ikke definere nogen type, og hvis vi ændre typen bliver dette ikke registreret som en fejl.</p>
 <p>Et dynamisk programmeringssprog giver derfor programmøren den frihed at han ikke skal bekymre sig om variabel typer, men tilgengæld er det meget lettere for programmøren at komme til at lave fejl i koden.</p>
 <p>Følgende program virker fint i Python:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Vi definerer variablen foo til at være af typen &quot;string&quot; ved</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># at give den en tekst streng som indhold.</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">foo <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="bu">print</span> foo</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># Her ændrer vi typen til int uden at dette er et problem.</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">foo <span class="op">=</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="bu">print</span> foo</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Vi definerer variablen foo til at være af typen &quot;string&quot; ved</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co"># at give den en tekst streng som indhold.</span></a>
+<a class="sourceLine" id="cb3-3" title="3">foo <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="bu">print</span> foo</a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># Her ændrer vi typen til int uden at dette er et problem.</span></a>
+<a class="sourceLine" id="cb3-7" title="7">foo <span class="op">=</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="bu">print</span> foo</a></code></pre></div>
 <p>Og her er det samme eksempel i PHP:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">&lt;?php</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">// Vi definerer variablen foo til at være af typen &quot;string&quot; ved</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">// at give den en tekst streng som indhold.</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">$foo</span> = <span class="st">&quot;Hello world&quot;</span><span class="ot">;</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">print</span> <span class="kw">$foo</span><span class="ot">;</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">// Her ændrer vi typen til int uden at dette er et problem.</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">$foo</span> = <span class="dv">10</span><span class="ot">;</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">print</span> <span class="kw">$foo</span><span class="ot">;</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">&lt;?php</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">// Vi definerer variablen foo til at være af typen &quot;string&quot; ved</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">// at give den en tekst streng som indhold.</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">$foo</span> = <span class="st">&quot;Hello world&quot;</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">print</span> <span class="kw">$foo</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">// Her ændrer vi typen til int uden at dette er et problem.</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">$foo</span> = <span class="dv">10</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="kw">print</span> <span class="kw">$foo</span><span class="ot">;</span></a></code></pre></div>
 <p>Statisk typet programmeringssprog er derfor mere sikre at programmere i, og det er typisk svære at lave den slags fejl i koden.</p>
 <h1 id="om-programmering-og-paradigmer">Om programmering og paradigmer</h1>
 <p><strong>UNDER UDVIKLING</strong></p>
@@ -332,50 +330,50 @@ Hej fra Go</code></pre>
 <p>I <em>GoArbejdsMappe</em> under <em>src</em> har vi en pakke kaldet <em>foo</em>. <em>foo</em> indeholder en <em>main.go</em>, der er selve hovedfilen som Go skal bruge. Derudover indeholder <em>foo</em> en lokal pakke kaldet <em>bar</em>.</p>
 <p>Et pakkenavn specificeres via nøgleordet <strong>package</strong>. <em>main.go</em> skal altid tilhøre <em>main</em> pakken, og det kan ikke laves om.</p>
 <p>Go’s standard bibliotek kommer med et hav af rigtigt gode pakker der alle kan bruges til at opbygge forskellige programmer. F.eks. indeholder pakken <em>database/sql</em> et interface til at arbejde med SQL databaser, mens pakken <em>net/http</em> giver HTTP klient og server implementeringer.</p>
-<p>Pakkerne der følger med i Go’s standard bibliotek kan ses på: <a href="https://golang.org/pkg/" class="uri">https://golang.org/pkg/</a></p>
+<p>Pakkerne der følger med i Go’s standard bibliotek kan ses på: <a href="https://golang.org/pkg/">https://golang.org/pkg/</a></p>
 <p>Go har indbygget funktionalitet til effektiv benyttelse af eksterne pakker uanset om det drejer sig om pakker fra Go’s eget standard bibliotek, eller om det drejer sig om tredjeparts pakker på f.eks. Github.</p>
 <p>Pakker bliver importeret i Go med nøgleordet <strong>import</strong>.</p>
 <p>Hvis vi tager udgangspunkt i ovenstående eksempel ville filerne se sådan ud:</p>
 <p><em>a.go</em></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">package</span> bar</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw">func</span> Blip() {</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blip!&quot;</span>)</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="kw">func</span> Blip() {</a>
+<a class="sourceLine" id="cb13-6" title="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blip!&quot;</span>)</a>
+<a class="sourceLine" id="cb13-7" title="7">}</a></code></pre></div>
 <p>Pakken <a href="https://golang.org/pkg/fmt/">fmt</a> er en pakke i Go’s standard bibliotek der implementerer forskellige input og output funktioner som svarer lidt til C’s <em>printf</em> og <em>scanf</em>.</p>
 <p><em>b.go</em></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">package</span> bar</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw">func</span> Blop() {</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blop!&quot;</span>)</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw">func</span> Blop() {</a>
+<a class="sourceLine" id="cb14-6" title="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blop!&quot;</span>)</a>
+<a class="sourceLine" id="cb14-7" title="7">}</a></code></pre></div>
 <p><em>c.go</em></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">package</span> bar</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="kw">func</span> Blup() {</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blup!&quot;</span>)</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb15-4" title="4"></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="kw">func</span> Blup() {</a>
+<a class="sourceLine" id="cb15-6" title="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blup!&quot;</span>)</a>
+<a class="sourceLine" id="cb15-7" title="7">}</a></code></pre></div>
 <p><em>main.go</em></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">import</span> (</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">    <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">    <span class="st">&quot;foo/bar&quot;</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">    fmt.Println(<span class="st">&quot;Hej, jeg er main!&quot;</span>)</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">    bar.Blip()</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">    bar.Blop()</a>
-<a class="sourceLine" id="cb16-13" data-line-number="13">    bar.Blup()</a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="kw">import</span> (</a>
+<a class="sourceLine" id="cb16-4" title="4">    <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb16-5" title="5">    <span class="st">&quot;foo/bar&quot;</span></a>
+<a class="sourceLine" id="cb16-6" title="6">)</a>
+<a class="sourceLine" id="cb16-7" title="7"></a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb16-9" title="9">    fmt.Println(<span class="st">&quot;Hej, jeg er main!&quot;</span>)</a>
+<a class="sourceLine" id="cb16-10" title="10"></a>
+<a class="sourceLine" id="cb16-11" title="11">    bar.Blip()</a>
+<a class="sourceLine" id="cb16-12" title="12">    bar.Blop()</a>
+<a class="sourceLine" id="cb16-13" title="13">    bar.Blup()</a>
+<a class="sourceLine" id="cb16-14" title="14">}</a></code></pre></div>
 <p>Filerne <em>a.go</em>, <em>b.go</em> og <em>c.go</em> tilhører alle den samme lokale pakke fordi de ligger i den samme undermappe. Navnet på en pakke behøver ikke være det samme som navnet på et bibliotek, men det er praktisk at benytte det samme navn.</p>
 <p>I <em>main.go</em> bliver to forskellige pakker importeret. Først bliver pakken <em>fmt</em> fra Go’s standard bibliotek importeret. Dernæst bliver den lokale pakke <em>bar</em> importeret. Vi importerer den lokale pakke <em>bar</em> ved at bruge pakkenavnet <em>foo</em>. Dette gør vi fordi vi har sat vores GOPATH variabel til at pege på <code>$HOME/GoArbejdsMappe</code>, og Go importerer lokale pakker relativt i forhold til GOPATH.</p>
 <p>Hvis du prøver at oprette ovenstående filer kan du teste programmet ved at bruge kommandoen:</p>
@@ -421,55 +419,55 @@ GoArbejdsMappe/src/foo/main.go:11: undefined: bar.blip</code></pre>
 <p><em>main.go</em> kan ikke længere se funktionen <em>blip()</em>.</p>
 <p>Lad os prøve at lave filerne lidt om og så køre <em>go install foo</em> igen.</p>
 <p><em>a.go</em></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">package</span> bar</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="kw">func</span> Blip() {</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blip!&quot;</span>)</a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">// Funktionen baz() er privat, og den kan kun kaldes</span></a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">// fra a.go eller fra andre filer i samme pakke, som</span></a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">// f.eks. b.go eller c.go.</span></a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="kw">func</span> baz() {</a>
-<a class="sourceLine" id="cb22-13" data-line-number="13">    fmt.Println(<span class="st">&quot;Hej, jeg er private baz!&quot;</span>)</a>
-<a class="sourceLine" id="cb22-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb22-2" title="2"></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb22-4" title="4"></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="kw">func</span> Blip() {</a>
+<a class="sourceLine" id="cb22-6" title="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blip!&quot;</span>)</a>
+<a class="sourceLine" id="cb22-7" title="7">}</a>
+<a class="sourceLine" id="cb22-8" title="8"></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="co">// Funktionen baz() er privat, og den kan kun kaldes</span></a>
+<a class="sourceLine" id="cb22-10" title="10"><span class="co">// fra a.go eller fra andre filer i samme pakke, som</span></a>
+<a class="sourceLine" id="cb22-11" title="11"><span class="co">// f.eks. b.go eller c.go.</span></a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="kw">func</span> baz() {</a>
+<a class="sourceLine" id="cb22-13" title="13">    fmt.Println(<span class="st">&quot;Hej, jeg er private baz!&quot;</span>)</a>
+<a class="sourceLine" id="cb22-14" title="14">}</a></code></pre></div>
 <p><em>b.go</em></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">package</span> bar</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">func</span> Blop() {</a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blop!&quot;</span>)</a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8">    <span class="co">// Her kalder vi funktionen baz() fra a.go</span></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9">    <span class="co">// Det kan vi fordi a.go og b.go er i samme pakke.</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10">    baz()</a>
-<a class="sourceLine" id="cb23-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb23-2" title="2"></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb23-4" title="4"></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="kw">func</span> Blop() {</a>
+<a class="sourceLine" id="cb23-6" title="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blop!&quot;</span>)</a>
+<a class="sourceLine" id="cb23-7" title="7"></a>
+<a class="sourceLine" id="cb23-8" title="8">    <span class="co">// Her kalder vi funktionen baz() fra a.go</span></a>
+<a class="sourceLine" id="cb23-9" title="9">    <span class="co">// Det kan vi fordi a.go og b.go er i samme pakke.</span></a>
+<a class="sourceLine" id="cb23-10" title="10">    baz()</a>
+<a class="sourceLine" id="cb23-11" title="11">}</a></code></pre></div>
 <p><em>c.go</em></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">package</span> bar</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="kw">func</span> Blup() {</a>
-<a class="sourceLine" id="cb24-6" data-line-number="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blup!&quot;</span>)</a>
-<a class="sourceLine" id="cb24-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">package</span> bar</a>
+<a class="sourceLine" id="cb24-2" title="2"></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb24-4" title="4"></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="kw">func</span> Blup() {</a>
+<a class="sourceLine" id="cb24-6" title="6">    fmt.Println(<span class="st">&quot;Hej, jeg er Blup!&quot;</span>)</a>
+<a class="sourceLine" id="cb24-7" title="7">}</a></code></pre></div>
 <p><em>main.go</em></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw">import</span> (</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">    <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5">    <span class="st">&quot;foo/bar&quot;</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb25-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb25-9" data-line-number="9">    fmt.Println(<span class="st">&quot;Hej, jeg er main!&quot;</span>)</a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11">    bar.Blip()</a>
-<a class="sourceLine" id="cb25-12" data-line-number="12">    bar.Blop()</a>
-<a class="sourceLine" id="cb25-13" data-line-number="13">    bar.Blup()</a>
-<a class="sourceLine" id="cb25-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb25-2" title="2"></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="kw">import</span> (</a>
+<a class="sourceLine" id="cb25-4" title="4">    <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb25-5" title="5">    <span class="st">&quot;foo/bar&quot;</span></a>
+<a class="sourceLine" id="cb25-6" title="6">)</a>
+<a class="sourceLine" id="cb25-7" title="7"></a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb25-9" title="9">    fmt.Println(<span class="st">&quot;Hej, jeg er main!&quot;</span>)</a>
+<a class="sourceLine" id="cb25-10" title="10"></a>
+<a class="sourceLine" id="cb25-11" title="11">    bar.Blip()</a>
+<a class="sourceLine" id="cb25-12" title="12">    bar.Blop()</a>
+<a class="sourceLine" id="cb25-13" title="13">    bar.Blup()</a>
+<a class="sourceLine" id="cb25-14" title="14">}</a></code></pre></div>
 <pre><code>$ go install foo
 $ ./GoArbejdsMappe/bin/foo
 Hej, jeg er main!
@@ -486,17 +484,17 @@ Hej, jeg er Blup!</code></pre>
 <h1 id="variabler">Variabler</h1>
 <p>En variabel er en pladsholder i computerens hukommelse til noget data. Denne data kan f.eks. være en tekststreng som ordet “hallo verden”, eller det kan f.eks. være et tal som tallet 100, men det kan også være andre ting. Hvorvidt en given værdig er tilladt eller ej fastlægges af variablens type. Variablens type fastsættes ved variablens deklaration.</p>
 <p>I Go erklæres en variabel med nøgleordet <code>var</code>.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co">// Deklarer en variabel af navnet &quot;minTekst&quot;, og giv den typen &quot;string&quot;.</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="kw">var</span> minTekst <span class="dt">string</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">// Deklarer en variabel af navnet &quot;mitTal&quot;, og den den typen &quot;int&quot;.</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw">var</span> mitTal <span class="dt">int</span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">// Giv variablen &quot;minTekst&quot; værdien &quot;Hallo verden&quot;.</span></a>
-<a class="sourceLine" id="cb27-8" data-line-number="8">minTekst = <span class="st">&quot;Hallo verden&quot;</span></a>
-<a class="sourceLine" id="cb27-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">// Giv variablen &quot;mitTal&quot; værdien &quot;100&quot;.</span></a>
-<a class="sourceLine" id="cb27-11" data-line-number="11">mitTal = <span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb27-1" title="1"><span class="co">// Deklarer en variabel af navnet &quot;minTekst&quot;, og giv den typen &quot;string&quot;.</span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="kw">var</span> minTekst <span class="dt">string</span></a>
+<a class="sourceLine" id="cb27-3" title="3"></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="co">// Deklarer en variabel af navnet &quot;mitTal&quot;, og den den typen &quot;int&quot;.</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="kw">var</span> mitTal <span class="dt">int</span></a>
+<a class="sourceLine" id="cb27-6" title="6"></a>
+<a class="sourceLine" id="cb27-7" title="7"><span class="co">// Giv variablen &quot;minTekst&quot; værdien &quot;Hallo verden&quot;.</span></a>
+<a class="sourceLine" id="cb27-8" title="8">minTekst = <span class="st">&quot;Hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb27-9" title="9"></a>
+<a class="sourceLine" id="cb27-10" title="10"><span class="co">// Giv variablen &quot;mitTal&quot; værdien &quot;100&quot;.</span></a>
+<a class="sourceLine" id="cb27-11" title="11">mitTal = <span class="dv">100</span></a></code></pre></div>
 <p>Hvis en variable ikke gives en begyndelsesværdi, initialisere Go variablen til en “nul værdi” for den type man definerer.</p>
 <p>Nul værdierne er følgende:</p>
 <ul>
@@ -505,66 +503,66 @@ Hej, jeg er Blup!</code></pre>
 <li>En tom tekststreng for tekststrenge.</li>
 </ul>
 <p>Variabler kan også defineres med en begyndelsesværdi.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">var</span> minTekst <span class="dt">string</span> = <span class="st">&quot;hallo verden&quot;</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">var</span> mitTal <span class="dt">int</span> = <span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">var</span> minTekst <span class="dt">string</span> = <span class="st">&quot;hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="kw">var</span> mitTal <span class="dt">int</span> = <span class="dv">100</span></a></code></pre></div>
 <p>Der findes også en forkortet form hvor Go selv finder ud af variablens type ud fra den værdi man giver den.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">var</span> minTekst = <span class="st">&quot;hallo verden&quot;</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw">var</span> mitTal = <span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">var</span> minTekst = <span class="st">&quot;hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw">var</span> mitTal = <span class="dv">100</span></a></code></pre></div>
 <p>Sidst, men ikke mindst kan man også erstatte nøgleordet <code>var</code> med semikolon foran lighedstegnet.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb30-1" data-line-number="1">minTekst := <span class="st">&quot;hallo verden&quot;</span></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">mitTal := <span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb30-1" title="1">minTekst := <span class="st">&quot;hallo verden&quot;</span></a>
+<a class="sourceLine" id="cb30-2" title="2">mitTal := <span class="dv">100</span></a></code></pre></div>
 <p>Ovenstående forkortede udgave, hvor semikolen bruges i stedet for nøgleordet <code>var</code>, kan kun bruges inde i en funktion. Udenfor en funktion skal enhver variabeldeklaration begynde med nøgleordet <code>var</code>, og den forkortede form <code>:=</code> er ikke tilgængelig.</p>
 <p>Variablers data kan ændres sålænge værdier er af samme type.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co">// Begyndende værdi.</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw">var</span> mitTal = <span class="dv">100</span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">// Ny værdi.</span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5">mitTal = <span class="dv">200</span></a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co">// Duer ikke da mitTal er deklareret automatisk som en int.</span></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8">mitTal = <span class="st">&quot;Hej verden&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb31-1" title="1"><span class="co">// Begyndende værdi.</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="kw">var</span> mitTal = <span class="dv">100</span></a>
+<a class="sourceLine" id="cb31-3" title="3"></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="co">// Ny værdi.</span></a>
+<a class="sourceLine" id="cb31-5" title="5">mitTal = <span class="dv">200</span></a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="co">// Duer ikke da mitTal er deklareret automatisk som en int.</span></a>
+<a class="sourceLine" id="cb31-8" title="8">mitTal = <span class="st">&quot;Hej verden&quot;</span></a></code></pre></div>
 <p>I det sidste tilfælde giver Go følgende fejlbesked:</p>
 <pre><code>cannot use &quot;Hej verden&quot; (type string) as type int in assignment</code></pre>
 <p>Det er også muligt at gruppere flere variabel deklarationer sammen. Go tillægger værdierne til variablerne i den rækkefølge de står.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">var</span> a, b, c <span class="dt">int</span> = <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">// Eller med den forkortede udgave.</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4">a, b, c := <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">var</span> a, b, c <span class="dt">int</span> = <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span></a>
+<a class="sourceLine" id="cb33-2" title="2"></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="co">// Eller med den forkortede udgave.</span></a>
+<a class="sourceLine" id="cb33-4" title="4">a, b, c := <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span></a></code></pre></div>
 <p>Med den forkortede udgave kan man sågar blande typerne.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb34-1" data-line-number="1">a, b, c := <span class="dv">10</span>, <span class="st">&quot;Hallo&quot;</span>, <span class="ot">false</span></a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb34-1" title="1">a, b, c := <span class="dv">10</span>, <span class="st">&quot;Hallo&quot;</span>, <span class="ot">false</span></a></code></pre></div>
 <p>Variablen <code>a</code> bliver deklareret til typen <code>int</code>, og får begyndelsesværdien 10. Variablen <code>b</code> bliver deklareret til typen <code>string</code>, og får begyndelsesværdien “Hallo”. Og variablen c bliver deklareret til typen <code>bool</code>, og får værdien “false”.</p>
 <h2 id="pointer">Pointer</h2>
 <p>En “pointer” i Go er en særlig variabel der indeholder en hukommelsesadresse på en anden almindelig variabel. Ligesom en almindelig variabel har en type, så har en pointer variabel også en type. Pointer variablens type fastsættes af den variablen type som pointeren “peger” på.</p>
 <p>Hvis jeg opretter en variablen af typen “string” med værdien “Hej verden”, så ligger denne værdi et sted i computerens hukommelse. Hvis jeg skal “pege” på denne hukommelsesadresse med en pointer variabel, så skal jeg bruge en pointer af typen “string”.</p>
 <p>Sagt med andre ord: En pointers type skal passe sammen med typen af det som den peger på.</p>
 <p>Lad os kigge på et konkret eksempel. Opret filen <em>main.go</em> og indtast følgende:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7">    <span class="co">// Først deklarer vi variablen &quot;a&quot; af typen &quot;string&quot;, og giver den værdien &quot;Hej&quot;.</span></a>
-<a class="sourceLine" id="cb35-8" data-line-number="8">    <span class="kw">var</span> a <span class="dt">string</span> = <span class="st">&quot;Hej&quot;</span></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb35-10" data-line-number="10">    <span class="co">// Dernæst deklarer vi variablen &quot;b&quot; af typen &quot;string pointer&quot;.</span></a>
-<a class="sourceLine" id="cb35-11" data-line-number="11">    <span class="co">// Vi bruger * til at indikere at denne variablen er en &quot;pointer&quot;.</span></a>
-<a class="sourceLine" id="cb35-12" data-line-number="12">    <span class="kw">var</span> b *<span class="dt">string</span></a>
-<a class="sourceLine" id="cb35-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb35-14" data-line-number="14">    <span class="co">// Her giver vi variablen &quot;b&quot; hukommelsesadressen på variablen &quot;a&quot;.</span></a>
-<a class="sourceLine" id="cb35-15" data-line-number="15">    <span class="co">// Vi bruger &amp; til at indikerer at det er hukommelsesadressen vi ønsker,</span></a>
-<a class="sourceLine" id="cb35-16" data-line-number="16">    <span class="co">// og ikke selve indholdet af &quot;a&quot;.</span></a>
-<a class="sourceLine" id="cb35-17" data-line-number="17">    b = &amp;a</a>
-<a class="sourceLine" id="cb35-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb35-19" data-line-number="19">    <span class="co">// Udskriv værdien der ligger i variablen &quot;a&quot;.</span></a>
-<a class="sourceLine" id="cb35-20" data-line-number="20">    fmt.Println(a)</a>
-<a class="sourceLine" id="cb35-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb35-22" data-line-number="22">    <span class="co">// Udskriv værdien der ligger i variablen &quot;b&quot;.</span></a>
-<a class="sourceLine" id="cb35-23" data-line-number="23">    fmt.Println(b)</a>
-<a class="sourceLine" id="cb35-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb35-25" data-line-number="25">    <span class="co">// Udskriv værdien af det som &quot;b&quot; peger på.</span></a>
-<a class="sourceLine" id="cb35-26" data-line-number="26">    fmt.Println(*b)</a>
-<a class="sourceLine" id="cb35-27" data-line-number="27">}</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb35-2" title="2"></a>
+<a class="sourceLine" id="cb35-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb35-4" title="4"></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb35-6" title="6"></a>
+<a class="sourceLine" id="cb35-7" title="7">    <span class="co">// Først deklarer vi variablen &quot;a&quot; af typen &quot;string&quot;, og giver den værdien &quot;Hej&quot;.</span></a>
+<a class="sourceLine" id="cb35-8" title="8">    <span class="kw">var</span> a <span class="dt">string</span> = <span class="st">&quot;Hej&quot;</span></a>
+<a class="sourceLine" id="cb35-9" title="9"></a>
+<a class="sourceLine" id="cb35-10" title="10">    <span class="co">// Dernæst deklarer vi variablen &quot;b&quot; af typen &quot;string pointer&quot;.</span></a>
+<a class="sourceLine" id="cb35-11" title="11">    <span class="co">// Vi bruger * til at indikere at denne variablen er en &quot;pointer&quot;.</span></a>
+<a class="sourceLine" id="cb35-12" title="12">    <span class="kw">var</span> b *<span class="dt">string</span></a>
+<a class="sourceLine" id="cb35-13" title="13"></a>
+<a class="sourceLine" id="cb35-14" title="14">    <span class="co">// Her giver vi variablen &quot;b&quot; hukommelsesadressen på variablen &quot;a&quot;.</span></a>
+<a class="sourceLine" id="cb35-15" title="15">    <span class="co">// Vi bruger &amp; til at indikerer at det er hukommelsesadressen vi ønsker,</span></a>
+<a class="sourceLine" id="cb35-16" title="16">    <span class="co">// og ikke selve indholdet af &quot;a&quot;.</span></a>
+<a class="sourceLine" id="cb35-17" title="17">    b = &amp;a</a>
+<a class="sourceLine" id="cb35-18" title="18"></a>
+<a class="sourceLine" id="cb35-19" title="19">    <span class="co">// Udskriv værdien der ligger i variablen &quot;a&quot;.</span></a>
+<a class="sourceLine" id="cb35-20" title="20">    fmt.Println(a)</a>
+<a class="sourceLine" id="cb35-21" title="21"></a>
+<a class="sourceLine" id="cb35-22" title="22">    <span class="co">// Udskriv værdien der ligger i variablen &quot;b&quot;.</span></a>
+<a class="sourceLine" id="cb35-23" title="23">    fmt.Println(b)</a>
+<a class="sourceLine" id="cb35-24" title="24"></a>
+<a class="sourceLine" id="cb35-25" title="25">    <span class="co">// Udskriv værdien af det som &quot;b&quot; peger på.</span></a>
+<a class="sourceLine" id="cb35-26" title="26">    fmt.Println(*b)</a>
+<a class="sourceLine" id="cb35-27" title="27">}</a></code></pre></div>
 <p>Hvis du kører ovenstående kode vil du se noget tilsvarende det her:</p>
 <pre><code>$ go run main.go
 Hej
@@ -574,46 +572,46 @@ Hej</code></pre>
 <p>Tegnet * betyder at en variabel bliver deklareret som en pointer, en variabel der peger på noget, og man kan rent praktisk tænke sig at “stjernen” er det man peger med.</p>
 <p>Forskellen på <code>fmt.Println(b)</code> og <code>fmt.Println(*b)</code> er at vi i første tilfælde udskriver værdien af selve variablen <code>b</code>, hvilket er hukommelsesadressen på variablen <code>a</code>. I et andet tilfælde vil vi ikke se selve hukommelsesadressen, men derimod vil vi gerne se hvad der egentligt gemmer sig på denne hukommelsesadresse, hvilket er værdien “Hej” som variablen <code>a</code> indholder.</p>
 <p>Tegnet &amp; bruges til at få hukommelsesadresser, og vi kan lave et lille program der viser dette isoleret fra emnet om pointere.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb37-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb37-7" data-line-number="7">    <span class="kw">var</span> foo <span class="dt">string</span> = <span class="st">&quot;Hej med dig&quot;</span></a>
-<a class="sourceLine" id="cb37-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb37-9" data-line-number="9">    <span class="co">// Udskriv værdien som foo indeholder.</span></a>
-<a class="sourceLine" id="cb37-10" data-line-number="10">    fmt.Println(foo)</a>
-<a class="sourceLine" id="cb37-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb37-12" data-line-number="12">    <span class="co">// Udskriv den hukommelsesadresse på foo.</span></a>
-<a class="sourceLine" id="cb37-13" data-line-number="13">    fmt.Println(&amp;foo)</a>
-<a class="sourceLine" id="cb37-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb37-2" title="2"></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb37-4" title="4"></a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb37-6" title="6"></a>
+<a class="sourceLine" id="cb37-7" title="7">    <span class="kw">var</span> foo <span class="dt">string</span> = <span class="st">&quot;Hej med dig&quot;</span></a>
+<a class="sourceLine" id="cb37-8" title="8"></a>
+<a class="sourceLine" id="cb37-9" title="9">    <span class="co">// Udskriv værdien som foo indeholder.</span></a>
+<a class="sourceLine" id="cb37-10" title="10">    fmt.Println(foo)</a>
+<a class="sourceLine" id="cb37-11" title="11"></a>
+<a class="sourceLine" id="cb37-12" title="12">    <span class="co">// Udskriv den hukommelsesadresse på foo.</span></a>
+<a class="sourceLine" id="cb37-13" title="13">    fmt.Println(&amp;foo)</a>
+<a class="sourceLine" id="cb37-14" title="14">}</a></code></pre></div>
 <p>Hvis du kører ovenstående program får du noget tilsvarende dette resultat:</p>
 <pre><code>Hej med dig
 0xc82000a320</code></pre>
 <p>Lad os lave et andet konkret eksempel.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb39-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb39-7" data-line-number="7">    <span class="kw">var</span> a <span class="dt">string</span> = <span class="st">&quot;foo&quot;</span></a>
-<a class="sourceLine" id="cb39-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb39-9" data-line-number="9">    <span class="kw">var</span> b *<span class="dt">string</span> = &amp;a</a>
-<a class="sourceLine" id="cb39-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb39-11" data-line-number="11">    fmt.Println(a)</a>
-<a class="sourceLine" id="cb39-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb39-13" data-line-number="13">    *b = <span class="st">&quot;bar&quot;</span></a>
-<a class="sourceLine" id="cb39-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb39-15" data-line-number="15">    fmt.Println(a)</a>
-<a class="sourceLine" id="cb39-16" data-line-number="16">}</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb39-2" title="2"></a>
+<a class="sourceLine" id="cb39-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb39-4" title="4"></a>
+<a class="sourceLine" id="cb39-5" title="5"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb39-6" title="6"></a>
+<a class="sourceLine" id="cb39-7" title="7">    <span class="kw">var</span> a <span class="dt">string</span> = <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb39-8" title="8"></a>
+<a class="sourceLine" id="cb39-9" title="9">    <span class="kw">var</span> b *<span class="dt">string</span> = &amp;a</a>
+<a class="sourceLine" id="cb39-10" title="10"></a>
+<a class="sourceLine" id="cb39-11" title="11">    fmt.Println(a)</a>
+<a class="sourceLine" id="cb39-12" title="12"></a>
+<a class="sourceLine" id="cb39-13" title="13">    *b = <span class="st">&quot;bar&quot;</span></a>
+<a class="sourceLine" id="cb39-14" title="14"></a>
+<a class="sourceLine" id="cb39-15" title="15">    fmt.Println(a)</a>
+<a class="sourceLine" id="cb39-16" title="16">}</a></code></pre></div>
 <p>Hvad tror du der sker, hvis du prøver at køre ovenstående program?</p>
 <pre><code>$ go run main.go
 foo
 bar</code></pre>
 <p>Efter som <code>*b</code> peger på hukommelsesadressen til variablen <code>a</code>, kan vi ændre på indholdet på selve adressen, og det gør vi med:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb41-1" data-line-number="1">*b = <span class="st">&quot;bar&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb41-1" title="1">*b = <span class="st">&quot;bar&quot;</span></a></code></pre></div>
 <p>I ovenstående er det ikke variablen <code>b</code> der bliver ændret, men derimod det indhold som den peger på i hukommelsen, hvilket er indholdet af variablen <code>a</code>.</p>
 <p>Man kunne undre sig over hvad formålet med pointere er, og hvis man kommer fra en Python, Ruby eller PHP baggrund, så giver de meget lidt mening. Men der findes specifikke situationer hvor en pointer kan være et meget nyttigt redskab.</p>
 <p>Go blev oprindeligt designet til systemprogrammering og til at være et alternativ til C++. Dette betyder at Go blev udstyret med pointere sådan at man har mulighed for at “pille” direkte i data via brug af specifikke hukommelsesadresser. Pointere kan også bruges til at få programmer til at køre hurtigere idet man får direkte kontrol over hvor og hvordan data gemmes i hukommelsen. Selvom det er mikroskopiske forskelle, så er der forskel på hastigheden på udlæsning af en lang tekst streng der ligger spredt rundt omkring i hukommelsen, og så på en tekststreng der ligger samme sted, punkt efter punkt. Dette betyder samtidig også at hukommelsen bliver mindre fragmenteret.</p>
@@ -624,43 +622,43 @@ bar</code></pre>
 <p>En konstant minder om en variabel, det er også en pladsholder i computerens hukommelse til noget data. Forskellen imellem en variabel og en konstant ligger i at en konstant ikke kan få ændret sit indhold, når den først er erklæret.</p>
 <p>I Go erklæres en konstant med nøgleordet <code>const</code></p>
 <p>I Go (og mange andre programmeringssprog) er det god kutyme at gøre brug af store bogstaver, når man definerer konstanter. På den måde er de lette at få øje på i koden, og de er dermed også lette at skelne fra variabler.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">const</span> MINTEKST <span class="dt">string</span> = <span class="st">&quot;Dette er en konstant&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">const</span> MINTEKST <span class="dt">string</span> = <span class="st">&quot;Dette er en konstant&quot;</span></a></code></pre></div>
 <p>Hvis du forsøger at ændre værdien af en konstant der allerede er sat, får du en fejl.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">const</span> MITTAL <span class="dt">int</span> = <span class="dv">100</span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="co">// Dette virker ikke!</span></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4">MITTAL = <span class="dv">200</span></a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">const</span> MITTAL <span class="dt">int</span> = <span class="dv">100</span></a>
+<a class="sourceLine" id="cb43-2" title="2"></a>
+<a class="sourceLine" id="cb43-3" title="3"><span class="co">// Dette virker ikke!</span></a>
+<a class="sourceLine" id="cb43-4" title="4">MITTAL = <span class="dv">200</span></a></code></pre></div>
 <p>Når man forsøger at ændre indholdet af en konstant giver Go følgende fejlbesked:</p>
 <pre><code>cannot assign to MITTAL</code></pre>
 <p>Hvilket blot betyder, at Go ikke er i stand til at ændre værdien af konstanten <code>MITTAL</code> da den allerede er sat.</p>
 <h1 id="structs">Structs</h1>
 <p>Structs i Go er en type samling af felter. De er brugbare til at gruppere data sammen.</p>
 <p>Lad os se på et simpelt eksempel:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">package</span> main</a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="co">// Vi opretter en struct af type &quot;person&quot;, og giver den felterne &quot;navn&quot; og &quot;alder&quot;.</span></a>
-<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="kw">type</span> Person <span class="kw">struct</span> {</a>
-<a class="sourceLine" id="cb45-7" data-line-number="7">    navn <span class="dt">string</span></a>
-<a class="sourceLine" id="cb45-8" data-line-number="8">    alder <span class="dt">int</span></a>
-<a class="sourceLine" id="cb45-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb45-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb45-11" data-line-number="11"><span class="kw">func</span> main() {</a>
-<a class="sourceLine" id="cb45-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb45-13" data-line-number="13">    <span class="co">// Med denne syntaks opretter vi en ny struct.</span></a>
-<a class="sourceLine" id="cb45-14" data-line-number="14">    fmt.Println(Person{<span class="st">&quot;Brian&quot;</span>, <span class="dv">20</span>})</a>
-<a class="sourceLine" id="cb45-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb45-16" data-line-number="16">    <span class="co">// Du kan også oprette en struct ved at navngive felterne.</span></a>
-<a class="sourceLine" id="cb45-17" data-line-number="17">    fmt.Println(Person{navn: <span class="st">&quot;Karina&quot;</span>, alder: <span class="dv">30</span>})</a>
-<a class="sourceLine" id="cb45-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb45-19" data-line-number="19">    <span class="co">// Hvis du udelader et felt får den sin naturlige nul værdi.</span></a>
-<a class="sourceLine" id="cb45-20" data-line-number="20">    fmt.Println(Person{name: <span class="st">&quot;Martin&quot;</span>})</a>
-<a class="sourceLine" id="cb45-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb45-22" data-line-number="22">    <span class="co">// Du tilgår en struck&#39;s felter med et punktum.</span></a>
-<a class="sourceLine" id="cb45-23" data-line-number="23">    s := Person{navn: <span class="st">&quot;Jonas&quot;</span>, age: <span class="dv">50</span>}</a>
-<a class="sourceLine" id="cb45-24" data-line-number="24">    fmt.Println(s.name)</a>
-<a class="sourceLine" id="cb45-25" data-line-number="25">}</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">package</span> main</a>
+<a class="sourceLine" id="cb45-2" title="2"></a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></a>
+<a class="sourceLine" id="cb45-4" title="4"></a>
+<a class="sourceLine" id="cb45-5" title="5"><span class="co">// Vi opretter en struct af type &quot;person&quot;, og giver den felterne &quot;navn&quot; og &quot;alder&quot;.</span></a>
+<a class="sourceLine" id="cb45-6" title="6"><span class="kw">type</span> Person <span class="kw">struct</span> {</a>
+<a class="sourceLine" id="cb45-7" title="7">    navn <span class="dt">string</span></a>
+<a class="sourceLine" id="cb45-8" title="8">    alder <span class="dt">int</span></a>
+<a class="sourceLine" id="cb45-9" title="9">}</a>
+<a class="sourceLine" id="cb45-10" title="10"></a>
+<a class="sourceLine" id="cb45-11" title="11"><span class="kw">func</span> main() {</a>
+<a class="sourceLine" id="cb45-12" title="12"></a>
+<a class="sourceLine" id="cb45-13" title="13">    <span class="co">// Med denne syntaks opretter vi en ny struct.</span></a>
+<a class="sourceLine" id="cb45-14" title="14">    fmt.Println(Person{<span class="st">&quot;Brian&quot;</span>, <span class="dv">20</span>})</a>
+<a class="sourceLine" id="cb45-15" title="15"></a>
+<a class="sourceLine" id="cb45-16" title="16">    <span class="co">// Du kan også oprette en struct ved at navngive felterne.</span></a>
+<a class="sourceLine" id="cb45-17" title="17">    fmt.Println(Person{navn: <span class="st">&quot;Karina&quot;</span>, alder: <span class="dv">30</span>})</a>
+<a class="sourceLine" id="cb45-18" title="18"></a>
+<a class="sourceLine" id="cb45-19" title="19">    <span class="co">// Hvis du udelader et felt får den sin naturlige nul værdi.</span></a>
+<a class="sourceLine" id="cb45-20" title="20">    fmt.Println(Person{name: <span class="st">&quot;Martin&quot;</span>})</a>
+<a class="sourceLine" id="cb45-21" title="21"></a>
+<a class="sourceLine" id="cb45-22" title="22">    <span class="co">// Du tilgår en struck&#39;s felter med et punktum.</span></a>
+<a class="sourceLine" id="cb45-23" title="23">    s := Person{navn: <span class="st">&quot;Jonas&quot;</span>, age: <span class="dv">50</span>}</a>
+<a class="sourceLine" id="cb45-24" title="24">    fmt.Println(s.name)</a>
+<a class="sourceLine" id="cb45-25" title="25">}</a></code></pre></div>
 <h1 id="specifikation">Specifikation</h1>
 <h2 id="reserverede-nøgleord">Reserverede nøgleord</h2>
 <p>De følgende nøgleord er reserverede, og kan derfor ikke bruges til identifikation.</p>
@@ -709,11 +707,11 @@ Functions:
 <hr>
 <div style="text-align:center;">
 <h3>Oprettet og vedligeholdt af</h3>
-    <p><a href="https://github.com/unixsheikh/" target="_blank">BinarySanity</a></p>
+    <p><a href="https://github.com/unixsheikh/" target="_blank">Unix Sheikh</a></p>
     <p><a href="https://github.com/unixsheikh/programmering-i-go/graphs/contributors" target="_blank">Projektdeltagere</a></p>
 <div class="license">
     <a class="cc-badge" rel="license" href="https://github.com/unixsheikh/programmering-i-go/blob/master/LICENSE"></a>
-    <span>Programmering i Go</span> af <a xmlns:cc="https://github.com/unixsheikh/programmering-i-go/blob/master/LICENSE" href="https://github.com/unixsheikh/" property="cc:attributionName" rel="cc:attributionURL">BinarySanity</a> er udgivet under licens:<br> <a rel="license" href="https://github.com/unixsheikh/programmering-i-go/blob/master/LICENSE">The MIT License</a>.
+    <span>Programmering i Go</span> af <a xmlns:cc="https://github.com/unixsheikh/programmering-i-go/blob/master/LICENSE" href="https://github.com/unixsheikh/" property="cc:attributionName" rel="cc:attributionURL">Unix Sheikh</a> er udgivet under licens:<br> <a rel="license" href="https://github.com/unixsheikh/programmering-i-go/blob/master/LICENSE">The MIT License</a>.
 </div>
 </div>
 </body>
