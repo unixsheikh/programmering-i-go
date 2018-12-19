@@ -1,6 +1,6 @@
 # Velkommen #
 
-"Programmering i Go" er en letlæselig og hurtig reference til programmeringssproget Go på dansk til hjemmesiden [golang.dk](http://www.golang.dk/).
+"Programmering i Go" er en letlæselig og hurtig reference til programmeringssproget Go på dansk.
 
 Bogen er et "levende" dokument der vil fortsætte med at blive udviklet og opdateret med mere brugbar information og eksempler efterhånden som det bliver muligt og tilgængeligt.
 
@@ -22,8 +22,4 @@ Filnavnene skal være på engelsk selvom indholdet er på dansk.
 Hvis du ønsker det, kan du efterlade dit navn (hjemmeside eller andet relevant information) i _CREDITS.md_ filen.
 
 **Vigtigt:** Du skal ikke redigere i HTML filerne. De bliver automatisk genereret med [Pandoc](http://pandoc.org/).
-
-### Fortæl om bogen ###
-
-Hjælp med at udbrede kendskabet til bogen ved at linke til hjemmesiden.
 
