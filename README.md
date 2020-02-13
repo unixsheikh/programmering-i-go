@@ -23,3 +23,4 @@ Hvis du ønsker det, kan du efterlade dit navn (hjemmeside eller andet relevant 
 
 **Vigtigt:** Du skal ikke redigere i HTML filerne. De bliver automatisk genereret med [Pandoc](http://pandoc.org/).
 
+Bogen kan læses på https://unixsheikh.com/programmering-i-go/
